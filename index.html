@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakHub | Tienda de zapatillas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-neutral-100 text-neutral-800 min-h-screen flex flex-col">
+
+    <!-- Navbar horizontal -->
+    <header class="bg-neutral-900 text-white sticky top-0 z-40 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">👟</span>
+                <span class="text-xl font-black tracking-tight">Sneak<span class="text-lime-400">Hub</span></span>
+            </div>
+
+            <nav class="flex items-center gap-2 sm:gap-4" aria-label="menu principal">
+                <a href="#" id="menu-home"
+                    class="menu-link px-3 sm:px-4 py-2 rounded-full text-sm font-semibold bg-lime-400 text-neutral-900 transition">
+                    Inicio
+                </a>
+                <a href="#" id="menu-product"
+                    class="menu-link px-3 sm:px-4 py-2 rounded-full text-sm font-semibold hover:bg-neutral-700 transition">
+                    Productos
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido dinámico -->
+    <main class="flex-1">
+        <div id="div_content" class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+            <!-- Aquí se inyecta home.html o view_product.html -->
+        </div>
+    </main>
+
+    <footer class="bg-neutral-900 text-neutral-400 text-center text-sm py-4">
+        Proyecto académico 2026 - SneakHub
+    </footer>
+
+    <script>
+        // Resalta el botón del menú activo
+        function marcarMenuActivo(idActivo) {
+            document.querySelectorAll('.menu-link').forEach(el => {
+                el.classList.remove('bg-lime-400', 'text-neutral-900')
+                el.classList.add('hover:bg-neutral-700')
+            })
+            const activo = document.getElementById(idActivo)
+            activo.classList.add('bg-lime-400', 'text-neutral-900')
+            activo.classList.remove('hover:bg-neutral-700')
+        }
+    </script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<div class="mb-8">
+    <h1 class="text-3xl font-black text-neutral-900">Nuestros productos</h1>
+    <p class="text-neutral-500 mt-1">Explora nuestro catálogo y encuentra tu próximo par favorito.</p>
+</div>
+
+<div id="div_filtros" class="flex flex-wrap gap-2 mb-8">
+    <!-- Botones de categoría inyectados por product.js -->
+</div>
+
+<div id="loading-products" class="text-center text-neutral-400 py-10">
+    Cargando productos...
+</div>
+
+<div id="grid-products" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+    <!-- Cards de productos inyectadas por product.js -->
+</div>
+
+<!-- Modal detalle producto -->
+<div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+    <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
+        <div class="flex justify-between items-center px-5 py-4 border-b">
+            <h2 class="text-lg font-bold text-neutral-900">Detalle del producto</h2>
+            <button onclick="cerrarModal()" class="text-neutral-400 hover:text-neutral-800 text-2xl leading-none">&times;</button>
+        </div>
+        <div id="div_product" class="px-5 py-5">
+            <!-- Detalle inyectado por product.js -->
+        </div>
+        <div class="flex justify-end gap-2 px-5 py-4 border-t bg-neutral-50">
+            <button onclick="cerrarModal()"
+                class="px-5 py-2 rounded-full bg-neutral-900 text-white font-semibold hover:bg-lime-500 hover:text-neutral-900 transition">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>
