@@ -1,18 +1,84 @@
-<div class="mb-8">
+<div class="mb-6">
     <h1 class="text-3xl font-black text-neutral-900">Nuestros productos</h1>
-    <p class="text-neutral-500 mt-1">Explora nuestro catálogo y encuentra tu próximo par favorito.</p>
+    <p class="text-neutral-500 mt-1">Explora nuestra selección y encuentra tu próximo par favorito.</p>
 </div>
 
-<div id="div_filtros" class="flex flex-wrap gap-2 mb-8">
-    <!-- Botones de categoría inyectados por product.js -->
-</div>
+<!-- Formulario de filtros -->
+<form id="form-filtros" class="bg-white rounded-2xl shadow p-4 mb-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+            <label for="nombre" class="block text-xs font-bold text-neutral-600 mb-1">Nombre</label>
+            <input type="text" id="nombre" name="nombre" maxlength="150" placeholder="Ej: Air Force"
+                class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lime-400">
+        </div>
+
+        <div>
+            <label for="marca" class="block text-xs font-bold text-neutral-600 mb-1">Marca</label>
+            <select id="marca" name="marca"
+                class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-lime-400">
+                <option value="">Todas</option>
+                <option value="Nike">Nike</option>
+                <option value="adidas">adidas</option>
+                <option value="Converse">Converse</option>
+                <option value="Jordan">Jordan</option>
+                <option value="New Balance">New Balance</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="categoria_id" class="block text-xs font-bold text-neutral-600 mb-1">Categoría</label>
+            <select id="categoria_id" name="categoria_id"
+                class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-lime-400">
+                <option value="">Todas</option>
+                <option value="1">Zapatillas urbanas</option>
+                <option value="2">Running y deportivas</option>
+                <option value="3">Básquet</option>
+                <option value="4">Casual y lifestyle</option>
+                <option value="5">Clásicos y colección</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="precio_min" class="block text-xs font-bold text-neutral-600 mb-1">Precio mínimo</label>
+            <input type="number" id="precio_min" name="precio_min" min="0" step="0.01" placeholder="0"
+                class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lime-400">
+        </div>
+
+        <div>
+            <label for="precio_max" class="block text-xs font-bold text-neutral-600 mb-1">Precio máximo</label>
+            <input type="number" id="precio_max" name="precio_max" min="0" step="0.01" placeholder="1000"
+                class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lime-400">
+        </div>
+
+        <div>
+            <label for="stock_min" class="block text-xs font-bold text-neutral-600 mb-1">Stock mínimo</label>
+            <input type="number" id="stock_min" name="stock_min" min="0" step="1" placeholder="0"
+                class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-lime-400">
+        </div>
+    </div>
+
+    <div id="errores-filtros" class="hidden mt-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg p-3"></div>
+
+    <div class="flex justify-end gap-2 mt-4">
+        <button type="button" id="btn-limpiar"
+            class="px-5 py-2 rounded-full bg-neutral-200 text-neutral-700 text-sm font-semibold hover:bg-neutral-300 transition">
+            Limpiar
+        </button>
+        <button type="submit"
+            class="px-5 py-2 rounded-full bg-neutral-900 text-white text-sm font-semibold hover:bg-lime-500 hover:text-neutral-900 transition">
+            Filtrar
+        </button>
+    </div>
+</form>
+
+<p id="total-products" class="text-sm text-neutral-500 mb-4"></p>
 
 <div id="loading-products" class="text-center text-neutral-400 py-10">
     Cargando productos...
 </div>
 
 <div id="grid-products" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-    <!-- Cards de productos inyectadas por product.js -->
+    <!-- Cards inyectadas por product.js -->
 </div>
 
 <!-- Modal detalle producto -->

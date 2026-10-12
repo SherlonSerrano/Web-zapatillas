@@ -16,7 +16,7 @@ function showHome() {
     marcarMenuActivo('menu-home')
     limpiarScript("js_product") /* Por si el usuario viene desde productos */
 
-    fetch(rutaArchivo)
+    fetch(rutaArchivo, { cache: 'no-store' })
         .then(response => response.text())
         .then(data => {
             document.getElementById("div_content").innerHTML = data
@@ -28,7 +28,7 @@ function showProductPage() {
 
     marcarMenuActivo('menu-product')
 
-    fetch(rutaArchivo)
+    fetch(rutaArchivo, { cache: 'no-store' }) /* no-store: evita usar una copia vieja de la vista */
         .then(response => response.text())
         .then(data => {
             document.getElementById("div_content").innerHTML = data
@@ -36,7 +36,7 @@ function showProductPage() {
             limpiarScript("js_product") /* Limpiar el script de product.js si ya existe */
 
             const script = document.createElement('script')
-            script.src = "js/product.js"
+            script.src = "js/product.js?v=" + Date.now() /* v=...: fuerza a cargar la versión actual */
             script.id = "js_product"
 
             document.body.appendChild(script) /* Agregar el script de product.js al final del body */
