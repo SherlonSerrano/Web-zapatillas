@@ -1,5 +1,5 @@
 <section class="grid sm:grid-cols-2 gap-8 items-center py-6">
-    <div>
+    <div class="fade-up">
         <span class="inline-block bg-lime-400 text-neutral-900 text-xs font-bold px-3 py-1 rounded-full mb-4">
             NUEVOS INGRESOS
         </span>
@@ -7,46 +7,58 @@
             Pisa fuerte con <span class="text-lime-500">SneakHub</span>
         </h1>
         <p class="mt-4 text-neutral-600 text-lg">
-            Encuentra las mejores zapatillas Nike, Adidas y Puma en un solo lugar.
+            Encuentra las mejores zapatillas Nike, adidas, Jordan, Converse y New Balance en un solo lugar.
             Calidad, estilo y el mejor precio para cada paso que das.
         </p>
-        <a href="#" id="btn-ver-productos"
-            class="inline-block mt-6 bg-neutral-900 text-white font-semibold px-6 py-3 rounded-full hover:bg-lime-500 hover:text-neutral-900 transition">
-            Ver productos →
-        </a>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+            <a href="#" data-ir-productos
+                class="inline-block bg-neutral-900 text-white font-semibold px-6 py-3 rounded-full hover:bg-lime-500 hover:text-neutral-900 transition">
+                Ver productos →
+            </a>
+        </div>
     </div>
 
-    <div class="relative">
+    <div class="relative fade-up">
         <img src="img/Jordan.webp"
-             alt="Logo SneakHub"
-             class="rounded-3xl shadow-xl w-full object-cover">
-        <img src="img/nuevo.svg"
+             alt="Zapatillas Air Jordan"
+             class="rounded-3xl shadow-xl w-full max-h-[460px] object-cover">
+        <img src="img/Nuevo.svg"
              alt="Etiqueta nuevo"
              class="hidden sm:block absolute -bottom-6 -left-6 w-28 h-28 rounded-full border-4 border-white shadow-lg">
     </div>
 </section>
 
-<section class="grid sm:grid-cols-3 gap-6 py-10">
-    <div class="bg-white rounded-2xl p-6 shadow text-center">
-        <img src="img/Delivery.webp" alt="Envío rápido" class="mx-auto rounded-xl mb-4">
+<!-- Acceso rápido por marca: abre Productos con el filtro ya aplicado -->
+<section class="py-8" aria-labelledby="titulo-marcas">
+    <h2 id="titulo-marcas" class="text-xl font-black text-neutral-900 mb-3">Compra por marca</h2>
+    <div class="flex flex-wrap gap-2">
+        <a href="#" data-ir-productos data-marca="Nike"
+            class="px-5 py-2 rounded-full bg-white shadow-sm font-semibold text-sm hover:bg-lime-400 transition">Nike</a>
+        <a href="#" data-ir-productos data-marca="adidas"
+            class="px-5 py-2 rounded-full bg-white shadow-sm font-semibold text-sm hover:bg-lime-400 transition">adidas</a>
+        <a href="#" data-ir-productos data-marca="Jordan"
+            class="px-5 py-2 rounded-full bg-white shadow-sm font-semibold text-sm hover:bg-lime-400 transition">Jordan</a>
+        <a href="#" data-ir-productos data-marca="Converse"
+            class="px-5 py-2 rounded-full bg-white shadow-sm font-semibold text-sm hover:bg-lime-400 transition">Converse</a>
+        <a href="#" data-ir-productos data-marca="New Balance"
+            class="px-5 py-2 rounded-full bg-white shadow-sm font-semibold text-sm hover:bg-lime-400 transition">New Balance</a>
+    </div>
+</section>
+
+<section class="grid sm:grid-cols-3 gap-6 pb-10">
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition text-center">
+        <img src="img/Delivery.webp" alt="Envío rápido" loading="lazy" class="mx-auto rounded-xl mb-4 h-36 w-full object-cover">
         <h3 class="font-bold text-lg">Envío rápido</h3>
         <p class="text-neutral-500 text-sm mt-1">Recibe tus zapatillas en tiempo récord.</p>
     </div>
-    <div class="bg-white rounded-2xl p-6 shadow text-center">
-        <img src="img/Marcas.webp" alt="Marcas originales" class="mx-auto rounded-xl mb-4">
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition text-center">
+        <img src="img/Marcas.webp" alt="Marcas originales" loading="lazy" class="mx-auto rounded-xl mb-4 h-36 w-full object-cover">
         <h3 class="font-bold text-lg">Marcas originales</h3>
         <p class="text-neutral-500 text-sm mt-1">100% productos garantizados.</p>
     </div>
-    <div class="bg-white rounded-2xl p-6 shadow text-center">
-        <img src="img/Precio.png" alt="Mejor precio" class="mx-auto rounded-xl mb-4">
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition text-center">
+        <img src="img/Precio.png" alt="Mejor precio" loading="lazy" class="mx-auto rounded-xl mb-4 h-36 w-full object-cover">
         <h3 class="font-bold text-lg">Mejor precio</h3>
         <p class="text-neutral-500 text-sm mt-1">Calidad al alcance de todos.</p>
     </div>
 </section>
-
-<script>
-    // Permite ir a "Productos" desde el botón del home
-    document.getElementById('btn-ver-productos').addEventListener('click', () => {
-        document.getElementById('menu-product').click()
-    })
-</script>
