@@ -1,9 +1,15 @@
-var api = 'api' /* Ruta relativa a index.html: http://localhost/webzapatillas/api */
+var api = 'api/endpoints' /* Ruta relativa a index.html */
 
-getListProduct()
+/* Estado de la consulta actual */
+var filtrosActuales = {}
+var paginaActual = 1
+var porPagina = 8
+
+cargarProductos(1)
 
 document.getElementById('form-filtros').addEventListener('submit', filtrarProductos)
 document.getElementById('btn-limpiar').addEventListener('click', limpiarFiltros)
+document.getElementById('por_pagina').addEventListener('change', cambiarPorPagina)
 
 function formatearPrecio(valor) {
     return '$' + Number(valor).toFixed(2)
@@ -20,86 +26,88 @@ function ocultarCargando() {
 function mostrarMensajeGrid(texto) {
     ocultarCargando()
     document.getElementById('total-products').textContent = ""
+    document.getElementById('paginacion').innerHTML = ""
     document.getElementById('grid-products').innerHTML =
         `<p class="col-span-full text-center text-neutral-500 py-10">${texto}</p>`
 }
 
-/* REQ 1: listado completo (GET) */
-async function getListProduct() {
-
-    mostrarCargando()
-
-    try {
-        const respuesta = await fetch(`${api}/productos.php`)
-        const resultado = await respuesta.json()
-
-        if (!resultado.ok) throw new Error(resultado.error)
-
-        renderProducts(resultado.data)
-    } catch (error) {
-        mostrarMensajeGrid("No se pudieron cargar los productos.")
-    }
-}
-
-/* REQ 3 + 4.1: filtrado (POST) sin recargar la página */
-async function filtrarProductos(e) {
-
-    e.preventDefault() /* Evita que el formulario recargue la página */
+/* REQ 2 y 3: listado con filtros y paginación (POST) */
+async function cargarProductos(pagina) {
 
     const erroresDiv = document.getElementById('errores-filtros')
     erroresDiv.classList.add('hidden')
 
-    /* Enviar solo los filtros que tengan valor */
-    const datos = Object.fromEntries(new FormData(e.target))
-    const filtros = {}
-    for (const [campo, valor] of Object.entries(datos)) {
-        if (valor.trim() !== '') filtros[campo] = valor.trim()
-    }
-
     mostrarCargando()
+
+    /* Filtros guardados + paginación */
+    const cuerpo = { ...filtrosActuales, pagina: pagina, por_pagina: porPagina }
 
     try {
         const respuesta = await fetch(`${api}/filtrar.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(filtros)
+            body: JSON.stringify(cuerpo)
         })
         const resultado = await respuesta.json()
 
         if (!resultado.ok) {
             ocultarCargando()
-            const detalles = resultado.detalles ? resultado.detalles.join('<br>') : resultado.error
-            erroresDiv.innerHTML = detalles
+            erroresDiv.innerHTML = resultado.detalles ? resultado.detalles.join('<br>') : resultado.error
             erroresDiv.classList.remove('hidden')
             return
         }
 
-        renderProducts(resultado.data)
+        paginaActual = resultado.paginacion.pagina_actual
+        renderProducts(resultado.data, resultado.paginacion)
+        renderPaginacion(resultado.paginacion)
     } catch (error) {
-        mostrarMensajeGrid("No se pudo realizar el filtrado.")
+        mostrarMensajeGrid("No se pudieron cargar los productos.")
     }
+}
+
+/* Submit del formulario: aplica los filtros y vuelve a la página 1 */
+function filtrarProductos(e) {
+
+    e.preventDefault() /* Evita que el formulario recargue la página */
+
+    const datos = Object.fromEntries(new FormData(e.target))
+    filtrosActuales = {}
+
+    for (const [campo, valor] of Object.entries(datos)) {
+        if (valor.trim() !== '') filtrosActuales[campo] = valor.trim()
+    }
+
+    cargarProductos(1)
 }
 
 function limpiarFiltros() {
     document.getElementById('form-filtros').reset()
-    document.getElementById('errores-filtros').classList.add('hidden')
-    getListProduct()
+    filtrosActuales = {}
+    cargarProductos(1)
 }
 
-function renderProducts(productos) {
+function cambiarPorPagina(e) {
+    porPagina = Number(e.target.value)
+    cargarProductos(1)
+}
+
+function renderProducts(productos, paginacion) {
 
     const grid = document.getElementById('grid-products')
 
     ocultarCargando()
     grid.innerHTML = ""
 
-    document.getElementById('total-products').textContent =
-        `${productos.length} producto(s) encontrado(s)`
-
     if (productos.length === 0) {
         mostrarMensajeGrid("No se encontraron productos con los filtros seleccionados.")
         return
     }
+
+    /* Ej: "Mostrando 9 a 16 de 20 producto(s)" */
+    const desde = (paginacion.pagina_actual - 1) * paginacion.por_pagina + 1
+    const hasta = desde + productos.length - 1
+    document.getElementById('total-products').textContent =
+        `Mostrando ${desde} a ${hasta} de ${paginacion.total_registros} producto(s)`
 
     productos.forEach(item => {
         const card = document.createElement('div')
@@ -123,7 +131,65 @@ function renderProducts(productos) {
     })
 }
 
-/* REQ 2: detalle de un producto (GET con id) */
+/* REQ 3: botones de paginación con la página actual resaltada */
+function renderPaginacion(paginacion) {
+
+    const nav = document.getElementById('paginacion')
+    const actual = paginacion.pagina_actual
+    const total = paginacion.total_paginas
+
+    nav.innerHTML = ""
+
+    if (total <= 1) return /* Con una sola página no hace falta paginar */
+
+    const claseBase = "min-w-[2.5rem] px-3 py-2 rounded-full text-sm font-semibold transition"
+    const claseNormal = `${claseBase} bg-white text-neutral-700 shadow hover:bg-neutral-200`
+    const claseActual = `${claseBase} bg-lime-400 text-neutral-900 shadow font-black`
+    const claseDeshabilitado = `${claseBase} bg-neutral-200 text-neutral-400 cursor-not-allowed`
+
+    function crearBoton(texto, pagina, clase, deshabilitado = false) {
+        const btn = document.createElement('button')
+        btn.textContent = texto
+        btn.className = clase
+        btn.disabled = deshabilitado
+        if (!deshabilitado) btn.onclick = () => cargarProductos(pagina)
+        return btn
+    }
+
+    /* Anterior */
+    nav.appendChild(crearBoton('« Anterior', actual - 1, claseNormal, actual === 1))
+    if (actual === 1) nav.lastChild.className = claseDeshabilitado
+
+    /* Números: se muestran todos si son pocos; si no, una ventana alrededor de la actual */
+    let inicio = 1
+    let fin = total
+    if (total > 7) {
+        inicio = Math.max(1, actual - 2)
+        fin = Math.min(total, actual + 2)
+    }
+
+    if (inicio > 1) {
+        nav.appendChild(crearBoton('1', 1, claseNormal))
+        if (inicio > 2) nav.insertAdjacentHTML('beforeend', '<span class="text-neutral-400">…</span>')
+    }
+
+    for (let i = inicio; i <= fin; i++) {
+        const btn = crearBoton(String(i), i, i === actual ? claseActual : claseNormal)
+        if (i === actual) btn.setAttribute('aria-current', 'page')
+        nav.appendChild(btn)
+    }
+
+    if (fin < total) {
+        if (fin < total - 1) nav.insertAdjacentHTML('beforeend', '<span class="text-neutral-400">…</span>')
+        nav.appendChild(crearBoton(String(total), total, claseNormal))
+    }
+
+    /* Siguiente */
+    nav.appendChild(crearBoton('Siguiente »', actual + 1, claseNormal, actual === total))
+    if (actual === total) nav.lastChild.className = claseDeshabilitado
+}
+
+/* Detalle de un producto (GET con id) */
 async function verDetalle(id) {
 
     try {
