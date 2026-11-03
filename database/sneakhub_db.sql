@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-10-2026 a las 22:05:13
+-- Tiempo de generación: 03-11-2026 a las 06:22:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,7 +69,17 @@ INSERT INTO `imagenes` (`id`, `producto_id`, `url`) VALUES
 (7, 7, 'img/productos/converse-chuck-taylor-all-star-low.jpg'),
 (8, 8, 'img/productos/adidas-samba-og.jpg'),
 (9, 9, 'img/productos/air-jordan-1-retro-high-og.jpg'),
-(10, 10, 'img/productos/new-balance-550.jpg');
+(10, 10, 'img/productos/new-balance-550.jpg'),
+(11, 11, 'img/productos/puma-suede-classic-xxi.jpg'),
+(12, 12, 'img/productos/puma-palermo.jpg'),
+(13, 13, 'img/productos/puma-velocity-nitro-3.jpg'),
+(14, 14, 'img/productos/puma-mb-04.jpg'),
+(15, 15, 'img/productos/nike-pegasus-41.jpg'),
+(16, 16, 'img/productos/nike-air-max-90.jpg'),
+(17, 17, 'img/productos/adidas-forum-low.jpg'),
+(18, 18, 'img/productos/converse-chuck-70.jpg'),
+(19, 19, 'img/productos/new-balance-574.jpg'),
+(20, 20, 'img/productos/puma-speedcat-og.jpg');
 
 -- --------------------------------------------------------
 
@@ -101,7 +111,17 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `marc
 (7, 'Converse Chuck Taylor All Star Caña Baja', 'Zapatillas clásicas Converse de lona y caña baja.', 259.90, 10, 'Converse', 4),
 (8, 'adidas Samba OG', 'Zapatillas adidas Samba OG de inspiración clásica y estilo lifestyle.', 429.00, 5, 'adidas', 4),
 (9, 'Air Jordan 1 Retro High OG', 'Zapatillas Jordan de caña alta con diseño icónico inspirado en el básquet.', 819.90, 3, 'Jordan', 5),
-(10, 'New Balance 550', 'Zapatillas New Balance 550 de inspiración deportiva retro y perfil bajo.', 499.90, 4, 'New Balance', 5);
+(10, 'New Balance 550', 'Zapatillas New Balance 550 de inspiración deportiva retro y perfil bajo.', 499.90, 4, 'New Balance', 5),
+(11, 'Puma Suede Classic XXI', 'Zapatillas Puma Suede Classic XXI de estilo casual y gamuza.', 349.90, 9, 'Puma', 4),
+(12, 'Puma Palermo', 'Zapatillas Puma Palermo de inspiración terrace y uso urbano.', 379.90, 6, 'Puma', 1),
+(13, 'Puma Velocity Nitro 3', 'Zapatillas Puma de running con amortiguación NITRO.', 499.90, 7, 'Puma', 2),
+(14, 'Puma MB.04', 'Zapatillas Puma de básquet de la línea MB.', 599.90, 3, 'Puma', 3),
+(15, 'Nike Pegasus 41', 'Zapatillas Nike de running para entrenamiento diario.', 579.90, 6, 'Nike', 2),
+(16, 'Nike Air Max 90', 'Zapatillas Nike Air Max 90 con unidad de aire visible.', 629.90, 5, 'Nike', 1),
+(17, 'adidas Forum Low', 'Zapatillas adidas Forum Low de inspiración básquet retro.', 399.00, 6, 'adidas', 5),
+(18, 'Converse Chuck 70 Caña Alta', 'Zapatillas Converse Chuck 70 de caña alta y lona reforzada.', 329.90, 8, 'Converse', 5),
+(19, 'New Balance 574', 'Zapatillas New Balance 574 de estilo lifestyle.', 389.90, 7, 'New Balance', 4),
+(20, 'Puma Speedcat OG', 'Zapatillas Puma Speedcat OG de inspiración automovilística.', 449.90, 4, 'Puma', 5);
 
 --
 -- Índices para tablas volcadas
@@ -144,7 +164,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
