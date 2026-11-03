@@ -12,7 +12,10 @@ document.getElementById('btn-limpiar').addEventListener('click', limpiarFiltros)
 document.getElementById('por_pagina').addEventListener('change', cambiarPorPagina)
 
 function formatearPrecio(valor) {
-    return '$' + Number(valor).toFixed(2)
+    return new Intl.NumberFormat('es-PE', {
+        style: 'currency',
+        currency: 'PEN'
+    }).format(Number(valor))
 }
 
 function mostrarCargando() {
